@@ -15,8 +15,10 @@ enUSDict = enchant.Dict("en_US")
 def checkWordInDict(subWords, suggestionsDict,typosFile):
     if(isinstance(subWords, list)):
         for subword in subWords:
+            #remove non-alpha characters like ; , : - etc.
             nonAlphaCharacters = re.compile('[^a-zA-Z]+')
             subword = nonAlphaCharacters.sub('',subword)
+            
             if len(subword)>0 and not enUSDict.check(subword) and subword not in suggestionsDict.keys():
                 typosFile.write(subword+' : ')
                 suggestions = enUSDict.suggest(subword)
@@ -26,8 +28,10 @@ def checkWordInDict(subWords, suggestionsDict,typosFile):
                 typosFile.write("\n")
 
     elif (isinstance(subWords,str)):
+        #remove non-alpha characters like ; , : - etc.
         nonAlphaCharacters = re.compile('[^a-zA-Z]+')
         subWords = nonAlphaCharacters.sub('',subWords)
+
         if not enUSDict.check(subWords) and subWords not in suggestionsDict.keys():
             typosFile.write(subWords+' : ')
             suggestions = enUSDict.suggest(subWords)
@@ -51,9 +55,12 @@ if __name__ == "__main__":
                         word = word.replace("#","")
                         if not re.match(('[A-Za-z]'),word):
                             continue
+                        #Find words starting with capital letters
                         subWords = re.findall('[A-Z][a-z]*',word)
+                        #Find words starting with small letters
                         subWords + re.findall('[a-z][A-Z]*',word)
                         if(len(subWords) > 0):
                             checkWordInDict(subWords,suggestionsDict,typosFile)
                         else:
                             checkWordInDict(word, suggestionsDict,typosFile)
+                    
