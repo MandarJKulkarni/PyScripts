@@ -1,6 +1,6 @@
 #prerequisite: You need to have enchant module installed
-#Currently it searches all comments in C# files in a dictionary
-#Suggestions for typos are dumped in a text file
+#Currently searches for all c# files in a directory
+#Suggestions for typos are dumped in a text file with the name derived from C# file name
 
 import enchant
 import wx
@@ -15,7 +15,9 @@ enUSDict = enchant.Dict("en_US")
 def checkWordInDict(subWords, suggestionsDict,typosFile):
     if(isinstance(subWords, list)):
         for subword in subWords:
-            if not enUSDict.check(subword) and subword not in suggestionsDict.keys():
+            nonAlphaCharacters = re.compile('[^a-zA-Z]+')
+            subword = nonAlphaCharacters.sub('',subword)
+            if len(subword)>0 and not enUSDict.check(subword) and subword not in suggestionsDict.keys():
                 typosFile.write(subword+' : ')
                 suggestions = enUSDict.suggest(subword)
                 suggestionsDict[subword] = suggestions
@@ -24,6 +26,8 @@ def checkWordInDict(subWords, suggestionsDict,typosFile):
                 typosFile.write("\n")
 
     elif (isinstance(subWords,str)):
+        nonAlphaCharacters = re.compile('[^a-zA-Z]+')
+        subWords = nonAlphaCharacters.sub('',subWords)
         if not enUSDict.check(subWords) and subWords not in suggestionsDict.keys():
             typosFile.write(subWords+' : ')
             suggestions = enUSDict.suggest(subWords)
@@ -42,19 +46,14 @@ if __name__ == "__main__":
                 suggestionsDict = dict()
                 for line in f1:
                     line = line.strip()
-                    if line.startswith("////") or line.startswith("#"):
-                        words = line.split()
-                        for word in words:
-                            word = word.replace("#","")
-                            subWords = re.findall('[A-Z][a-z]*',word)
-                            if(len(subWords) > 0):
-                                checkWordInDict(subWords,suggestionsDict,typosFile)
-                            else:
-                                checkWordInDict(word, suggestionsDict,typosFile)
-                            #sys.stdout.write(word)
-                            #sys.stdout.write(" ")
-                        
-               #         sys.stdout.write("\n")
-               #         sys.stdout.flush()
-                 
-                    
+                    words = line.split()
+                    for word in words:
+                        word = word.replace("#","")
+                        if not re.match(('[A-Za-z]'),word):
+                            continue
+                        subWords = re.findall('[A-Z][a-z]*',word)
+                        subWords + re.findall('[a-z][A-Z]*',word)
+                        if(len(subWords) > 0):
+                            checkWordInDict(subWords,suggestionsDict,typosFile)
+                        else:
+                            checkWordInDict(word, suggestionsDict,typosFile)
