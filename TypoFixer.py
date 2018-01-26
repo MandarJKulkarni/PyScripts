@@ -25,6 +25,7 @@ import fileinput
 import sys
 import stat
 import re
+import threading
 
 def readTyposFile(typosFile):
     correctionsDict=dict()
@@ -34,6 +35,15 @@ def readTyposFile(typosFile):
         correction=re.sub('[^A-Za-z]+','',correction)
         correctionsDict[typo] = correction
     return correctionsDict
+
+def fixTheTypos(f2, filedata, correctionsDict):
+    #lock =threading.Lock()
+    #lock.acquire()
+    for key,val in correctionsDict.items():
+        filedata = filedata.replace(key, val)
+    f2.write(filedata)
+    f2.close()
+    #lock.release()
 
 if __name__ == "__main__":
     for root,dirs,files in os.walk("D:\\MyCode\\CSFiles"):
@@ -49,8 +59,6 @@ if __name__ == "__main__":
                     continue
                 filedata = f1.read()
                 f1.close()
-                for key,val in correctionsDict.items():
-                    filedata = filedata.replace(key, val)
                 f2=open(os.path.join(root,file),'w')
-                f2.write(filedata)
-                f2.close()
+                t= threading.Thread(target=fixTheTypos,args=(f2,filedata, correctionsDict,))
+                t.start()
