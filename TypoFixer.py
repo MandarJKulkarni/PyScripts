@@ -18,8 +18,6 @@
 
 #Then this script PythonTypoFixer.py should be run on the same directory.
 
-#TODO: Create separate threads for reading typos txt and fixing the cs files.
-
 import os
 import fileinput
 import sys
@@ -27,11 +25,9 @@ import stat
 import re
 import threading
 
-def readTyposFile(typosFile):
-    correctionsDict=dict()
+def readTyposFile(typosFile, correctionsDict):
     for line in typosFile:
         typo,correction = line.split(" : ")
-        
         correction=re.sub('[^A-Za-z]+','',correction)
         correctionsDict[typo] = correction
     return correctionsDict
@@ -54,7 +50,10 @@ if __name__ == "__main__":
                 if not os.path.isfile(os.path.join(root,typosFileName)):
                     continue
                 typosFile = open(os.path.join(root,typosFileName),'r')
-                correctionsDict = readTyposFile(typosFile)
+                correctionsDict=dict()
+                t= threading.Thread(target=readTyposFile,args=(typosFile,correctionsDict))
+                t.start()
+                t.join()
                 if len(correctionsDict) == 0:
                     continue
                 filedata = f1.read()
