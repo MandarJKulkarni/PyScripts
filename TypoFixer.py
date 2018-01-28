@@ -54,10 +54,12 @@ if __name__ == "__main__":
                 t= threading.Thread(target=readTyposFile,args=(typosFile,correctionsDict))
                 t.start()
                 t.join()
+                
                 if len(correctionsDict) == 0:
                     continue
                 filedata = f1.read()
                 f1.close()
+                
                 f2=open(os.path.join(root,file),'w')
                 t= threading.Thread(target=fixTheTypos,args=(f2,filedata, correctionsDict,))
                 t.start()
