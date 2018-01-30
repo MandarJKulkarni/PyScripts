@@ -45,7 +45,7 @@ if __name__ == "__main__":
         for file in files:
             if file.endswith(".cs"):
                 f1 = open(os.path.join(root, file),'r')
-                typosFileName = file[:-3] +"typos.txt"
+                typosFileName = file +"typos.txt"
                 typosFile = open(os.path.join(root,typosFileName),'w')
                 suggestionsDict = dict()
                 for line in f1:
