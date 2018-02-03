@@ -47,6 +47,7 @@ if __name__ == "__main__":
                 f1 = open(os.path.join(root, file),'r')
                 typosFileName = file +"typos.txt"
                 typosFile = open(os.path.join(root,typosFileName),'w')
+                
                 suggestionsDict = dict()
                 for line in f1:
                     line = line.strip()
