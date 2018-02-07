@@ -32,7 +32,7 @@ def checkWordInDict(subWords, suggestionsDict,typosFile):
         nonAlphaCharacters = re.compile('[^a-zA-Z]+')
         subWords = nonAlphaCharacters.sub('',subWords)
 
-        if not enUSDict.check(subWords) and subWords not in suggestionsDict.keys():
+        if len(subWords)>0 and not enUSDict.check(subWords) and subWords not in suggestionsDict.keys():
             typosFile.write(subWords+' : ')
             suggestions = enUSDict.suggest(subWords)
             suggestionsDict[subWords] = suggestions
@@ -45,12 +45,13 @@ if __name__ == "__main__":
         for file in files:
             if file.endswith(".cs"):
                 f1 = open(os.path.join(root, file),'r')
-                typosFileName = file +"typos.txt"
+                typosFileName = file[:-3] +"typos.txt"
                 typosFile = open(os.path.join(root,typosFileName),'w')
-                
                 suggestionsDict = dict()
+                lineCount=0
                 for line in f1:
                     line = line.strip()
+                    lineCount+=1
                     words = line.split()
                     for word in words:
                         word = word.replace("#","")
@@ -64,4 +65,6 @@ if __name__ == "__main__":
                             checkWordInDict(subWords,suggestionsDict,typosFile)
                         else:
                             checkWordInDict(word, suggestionsDict,typosFile)
+                typosFile.write("Total lines parsed:"+str(lineCount))
+                typosFile.close()
                     
