@@ -55,8 +55,8 @@ if __name__ == "__main__":
                     words = line.split()
                     for word in words:
                         word = word.replace("#","")
-                        if not re.match(('[A-Za-z]'),word):
-                            continue
+                        #if not re.match(('[A-Za-z]'),word):
+                        #    continue
                         #Find words starting with capital letters
                         subWords = re.findall('[A-Z][a-z]*',word)
                         #Find words starting with small letters
