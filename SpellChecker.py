@@ -12,14 +12,16 @@ import re
 
 enUSDict = enchant.Dict("en_US")
 
+keywords = ["namespace","args"]
+
 def checkWordInDict(subWords, suggestionsDict,typosFile):
     if(isinstance(subWords, list)):
         for subword in subWords:
             #remove non-alpha characters like ; , : - etc.
             nonAlphaCharacters = re.compile('[^a-zA-Z]+')
             subword = nonAlphaCharacters.sub('',subword)
-            
-            if len(subword)>0 and not enUSDict.check(subword) and subword not in suggestionsDict.keys():
+
+            if len(subword)>0 and not subword in keywords and not enUSDict.check(subword) and subword not in suggestionsDict.keys():
                 typosFile.write(subword+' : ')
                 suggestions = enUSDict.suggest(subword)
                 suggestionsDict[subword] = suggestions
@@ -32,7 +34,7 @@ def checkWordInDict(subWords, suggestionsDict,typosFile):
         nonAlphaCharacters = re.compile('[^a-zA-Z]+')
         subWords = nonAlphaCharacters.sub('',subWords)
 
-        if len(subWords)>0 and not enUSDict.check(subWords) and subWords not in suggestionsDict.keys():
+        if len(subWords)>0 and not subWords in keywords and not enUSDict.check(subWords) and subWords not in suggestionsDict.keys():
             typosFile.write(subWords+' : ')
             suggestions = enUSDict.suggest(subWords)
             suggestionsDict[subWords] = suggestions
@@ -45,8 +47,7 @@ if __name__ == "__main__":
         for file in files:
             if file.endswith(".cs"):
                 f1 = open(os.path.join(root, file),'r')
-                #typosFileName = file[:-3] +"typos.txt"
-                typosFileName = file +"typos.txt"
+                typosFileName = file[:-3] +"typos.txt"
                 typosFile = open(os.path.join(root,typosFileName),'w')
                 suggestionsDict = dict()
                 lineCount=0
