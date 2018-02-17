@@ -14,6 +14,7 @@ enUSDict = enchant.Dict("en_US")
 
 keywords = ["namespace","args"]
 
+#Need to transform this 'script' into an OOPS program
 def checkWordInDict(subWords, suggestionsDict,typosFile):
     if(isinstance(subWords, list)):
         for subword in subWords:
