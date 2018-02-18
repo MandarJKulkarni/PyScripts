@@ -25,6 +25,7 @@ import stat
 import re
 import threading
 
+#TODO: Change this 'script' with better design using OOPS
 def readTyposFile(typosFile, correctionsDict):
     for line in typosFile:
         typo,correction = line.split(" : ")
