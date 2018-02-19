@@ -1,4 +1,4 @@
-#Prerequisite is to keep all your files which you want to modify under one directory
+#Prerequisite is to keep all your files; which you want to modify; under one directory
 #Run the SpellChecker.py first to find out the typos from files and
 #dump the corresponding suggestions in a text file
 
@@ -15,6 +15,7 @@
 #Version : Version
 #alread : already
 #if you find all the entries in typos.txt are invalid, remove all the entries and just keep the empty file.
+#or delete the file
 
 #Then this script PythonTypoFixer.py should be run on the same directory.
 
