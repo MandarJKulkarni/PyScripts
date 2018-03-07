@@ -10,6 +10,8 @@
 #Text to look for: <PlatformToolset>v100</PlatformToolset>
 #Text to replace with: <PlatformToolset>v140</PlatformToolset>
 
+#ToDo: Need to make the above 3 options as command line arguments
+
 import os
 import fileinput
 import sys
