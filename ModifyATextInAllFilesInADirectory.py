@@ -6,47 +6,46 @@
 #The option Update would upgrade from v100 to v140.
 #The option revert would change the vcxproj files back to v100.
 
-#Files extension to search for: .vcxproj
-#Text to look for: <PlatformToolset>v100</PlatformToolset>
-#Text to replace with: <PlatformToolset>v140</PlatformToolset>
-
-#ToDo: Need to make the above 3 options as command line arguments
+#Files extension to search for: argv[1]
+#argv[2] : update -> replace argv[3] with argv[4]
+#argv[2] : revert -> replace argv[4] with argv[3]
+#Text to look for: argv[3]
+#Text to replace with: argv[4]
 
 import os
 import fileinput
 import sys
 import stat
-upgradeTo140 =False
-revertTo100=False
-if (len(sys.argv)>1 and sys.argv[1] == 'Update'):
-    upgradeTo140=True
-elif(len(sys.argv)>1 and sys.argv[1]=='revert'):
-    revertTo100=True
 
-f=open("myvcxprojs","w")
-for root,dirs,files in os.walk("D:\\MY_CODE"):
-    for file in files:
-        if file.endswith(".vcxproj"):
-            f.write(os.path.join(root, file) + '\n')
-           # from shutil import copyfile
-            f1 = open(os.path.join(root, file),'r')
-            filedata = f1.read()
-            f1.close()
-            if("<PlatformToolset>v100</PlatformToolset>" in filedata):
-                if(upgradeTo140):
-                    newdata = filedata.replace("<PlatformToolset>v100</PlatformToolset>", "<PlatformToolset>v140</PlatformToolset>")
-                else:
-                    newdata =filedata
-            elif("<PlatformToolset>v140</PlatformToolset>" in filedata):
-                if(revertTo100):
-                    newdata = filedata.replace("<PlatformToolset>v140</PlatformToolset>", "<PlatformToolset>v100</PlatformToolset>")
-                else:
-                    newdata = filedata
-            else:
-                newdata = filedata.replace("<CharacterSet>MultiByte</CharacterSet>", "<PlatformToolset>v140</PlatformToolset>\n<CharacterSet>MultiByte</CharacterSet>")
-                newdata = newdata.replace("<UseOfMfc>false</UseOfMfc>", "<UseOfMfc>false</UseOfMfc>\n<PlatformToolset>v140</PlatformToolset>")
-            os.chmod( os.path.join(root, file), stat.S_IWRITE )
-            f2 = open(os.path.join(root, file),'w')
-            f2.write(newdata)
-            f2.close()
-f.close()
+def changeFileContent(root, file, newdata):
+    os.chmod( os.path.join(root, file), stat.S_IWRITE )
+    f2 = open(os.path.join(root, file),'w')
+    f2.write(newdata)
+    f2.close()
+
+if __name__ == "__main__":
+    update =False
+    revert=False
+    if (len(sys.argv)>2 and sys.argv[2] == 'update'):
+        update=True
+    elif(len(sys.argv)>2 and sys.argv[2]=='revert'):
+        revert=True
+
+    f=open("myvcxprojs","w")
+    for root,dirs,files in os.walk("D:\\MY_CODE"):
+        for file in files:
+            if file.endswith(sys.argv[1]):
+                f.write(os.path.join(root, file) + '\n')
+               # from shutil import copyfile
+                f1 = open(os.path.join(root, file),'r')
+                filedata = f1.read()
+                f1.close()
+                if(sys.argv[3] in filedata):
+                    if(update):
+                        newdata = filedata.replace(sys.argv[3], sys.argv[4])
+                        changeFileContent(root,file,newdata)
+                elif(sys.argv[4] in filedata):
+                    if(revert):
+                        newdata = filedata.replace(sys.argv[4], sys.argv[3])
+                        changeFileContent(root,file,newdata)
+    f.close()
