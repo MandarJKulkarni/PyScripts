@@ -36,7 +36,7 @@ if __name__ == "__main__":
         for file in files:
             if file.endswith(sys.argv[1]):
                 f.write(os.path.join(root, file) + '\n')
-               # from shutil import copyfile
+
                 f1 = open(os.path.join(root, file),'r')
                 filedata = f1.read()
                 f1.close()
