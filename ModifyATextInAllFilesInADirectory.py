@@ -35,6 +35,7 @@ if __name__ == "__main__":
     for root,dirs,files in os.walk("D:\\MY_CODE"):
         for file in files:
             if file.endswith(sys.argv[1]):
+                #TODO: Instead of writing all file names in one file, put them in a separate file
                 f.write(os.path.join(root, file) + '\n')
 
                 f1 = open(os.path.join(root, file),'r')
