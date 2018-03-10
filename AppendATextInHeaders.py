@@ -2,6 +2,8 @@
 #I wanted to append Microsoft's banned.h in every header of our source code
 #I had to append the #include at the end of the file and this script saved me a lot of time.
 
+#ToDo:Break the platform specific ifs into separate functions maybe?
+
 import os
 headerList = open("headersToModify.txt","w")
 for root,dirs,files in os.walk("."):
