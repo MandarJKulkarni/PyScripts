@@ -1,3 +1,6 @@
+#Prerequisite is user should be logged in to Google project
+#and authenticated (either gcloud init or gcloud auth application-default login)
+
 import google.cloud
 from google.cloud import storage
 
