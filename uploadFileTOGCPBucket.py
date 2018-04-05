@@ -9,3 +9,4 @@ if storageClient is not None:
         testBlob = testBucket.blob("mydata.json")
         if testBlob is not None:
             testBlob.upload_from_filename("mydata.json")
+			print("mydata.json uploaded to Google cloud bucket " + bucketName +"\n")
