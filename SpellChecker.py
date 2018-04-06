@@ -2,6 +2,8 @@
 #Currently searches for all c# files in a directory
 #Suggestions for typos are dumped in a text file with the name derived from C# file name
 
+#ToDo: Get the directory path, files extensions as user inputs
+
 import enchant
 import wx
 import os
