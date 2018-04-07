@@ -46,7 +46,8 @@ def checkWordInDict(subWords, suggestionsDict,typosFile):
             typosFile.write("\n")
 
 if __name__ == "__main__":
-    for root,dirs,files in os.walk("D:\\MyCode\\CSFiles"):
+    dirToScan = input(" Enter full path of the directory to scan for typos: ")
+    for root,dirs,files in os.walk(dirToScan):
         for file in files:
             if file.endswith(".cs"):
                 f1 = open(os.path.join(root, file),'r')
