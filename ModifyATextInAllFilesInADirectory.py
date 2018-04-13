@@ -32,6 +32,7 @@ if __name__ == "__main__":
         revert=True
 
     f=open("myvcxprojs","w")
+    #ToDo: Get the directory as input from user
     for root,dirs,files in os.walk("D:\\MY_CODE"):
         for file in files:
             if file.endswith(sys.argv[1]):
