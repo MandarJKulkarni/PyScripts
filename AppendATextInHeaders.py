@@ -1,6 +1,8 @@
 #Prerequisite: Dump the list of headers that you want to modify in a text file
+#Working directory for this script should be your source code's root directory
+
 #I wanted to append Microsoft's banned.h in every header of our source code
-#I had to append the #include at the end of the file and this script saved me a lot of time.
+#I had to append the #include at the end of the file and I wrote this script to save time.
 
 #ToDo:Break the platform specific ifs into separate functions maybe?
 
