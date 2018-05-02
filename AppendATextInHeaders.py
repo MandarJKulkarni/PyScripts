@@ -12,6 +12,7 @@ for root,dirs,files in os.walk("."):
     for file in files:
         if file.endswith(".h") or file.endswith(".hh") :
             if os.name == "nt":
+                #headerList.write(os.path.join(root,file+"\n"))
                 headerList.write(root+"\\"+file+"\n")
                 os.chmod(root+"\\"+file, 511)
                 writefile = open(root+"\\"+file, "a")
