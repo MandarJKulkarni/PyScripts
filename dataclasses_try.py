@@ -1,6 +1,5 @@
 from dataclasses import dataclass
 
-
 class OldStyleStudentInfo:
     roll_no = 0
     name = ''
