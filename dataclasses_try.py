@@ -10,13 +10,11 @@ class OldStyleStudentInfo:
         self.name = name
         self.subjects = subjects
 
-
 @dataclass(order=True, unsafe_hash=True)
 class StudentInfo:
     roll_no: int
     name: str
     subjects: list
-
 
 std1 = StudentInfo(14,'Vijay',['Maths','Science'])
 std2 = StudentInfo(15,'Ajay',['Hindi','English'])
