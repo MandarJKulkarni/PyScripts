@@ -3,9 +3,10 @@ import asyncio
 
 
 async def send_request_get_response(url, session):
-    async with session.get(url) as resp:
-        print(await resp.text())
-        return await resp.read()
+    for i in range(4):
+        async with session.get(url) as resp:
+            print(await resp.text())
+            # return await resp.read()
 
 
 async def main():
@@ -14,7 +15,6 @@ async def main():
         future2 = asyncio.ensure_future(send_request_get_response('http://httpbin.org/get', session))
         await future1
         await future2
-
 
 if __name__ == "__main__":
     asyncio.run(main())
