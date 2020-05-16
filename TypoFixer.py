@@ -12,7 +12,7 @@
 
 #And if I want to fix only the versoin and alread typos, because the other 2 entries are valid,
 #then you should fix the file to contain only below lines
-#Version : Version
+#Versoin : Version
 #alread : already
 #if you find all the entries in typos.txt are invalid, remove all the entries and just keep the empty file.
 #or delete the file
