@@ -16,7 +16,6 @@
 #alread : already
 #if you find all the entries in typos.txt are invalid, remove all the entries and just keep the empty file.
 #or delete the file
-
 #Then this script PythonTypoFixer.py should be run on the same directory.
 
 import os
