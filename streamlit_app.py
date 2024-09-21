@@ -1,3 +1,6 @@
+# pip install streamlit
+# use command streamlit run streamlit_app.py to run the script
+
 # Import convention
 import streamlit as st
 
